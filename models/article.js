@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const articleSchema = new Schema({
 	title: { type: String },
-	date: { type: Date, default: Date.now() },
+	date: { type: Date },
 	url: { type: String }
 });
 
