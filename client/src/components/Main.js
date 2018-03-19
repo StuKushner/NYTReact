@@ -108,18 +108,40 @@ class Main extends Component {
 		return (
 			<div>
 				<Container>
+				// Jumbotron
 				<Jumbotron />
+				// Search form and Results Form
+				<Search
+					handleTopicChange={this.handleTopicChange}
+					handleStartYearChange={this.handleStartYearChange}
+					handleEndYearChange={this.handleEndYearChange}
+					handleFormSubmit={this.handleFormSubmit}
+					getAllArticles={this.getAllArticles}
+				/>
 					<Row>
 						<Col size="sm-12">
-						<br>
-							<Search
-								handleTopicChange={this.handleTopicChange}
-								handleStartYearChange={this.handleStartYearChange}
-								handleEndYearChange={this.handleEndYearChange}
-								handleFormSubmit={this.handleFormSubmit}
-								getAllArticles={this.getAllArticles}
-							/>
-
+							<br>
+							<div className="panel panel-primary">
+								<div className="panel panel-heading">
+									<h3 className="panel-title">
+										<strong>
+											<i className="fa fa-list-alt">
+												Saved Articles
+											</i>
+										</strong>
+									</h3>
+								</div>
+								<div className="panel-body">
+									<ul className="list-group">
+										{this.getSavedArticles}
+									</ul>
+								</div>
+							</div>
+						</Col>
+					</Row>
+				</Container>
+				<Footer />	
+			</div>
 		);
 	}
 }
