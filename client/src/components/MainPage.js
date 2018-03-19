@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import Jumbotron from "./components/Jumbotron";
+import { Container, Row, Col } from "./components/Grid";
 import Saved from "./SavedForm";
 import Results from "./ResultsForm";
 import Search from "./SearchForm";
@@ -104,7 +106,20 @@ class Main extends Component {
 	// How the main page will be displayed
 	render() {
 		return (
-			
+			<div>
+				<Container>
+				<Jumbotron />
+					<Row>
+						<Col size="sm-12">
+						<br>
+							<Search
+								handleTopicChange={this.handleTopicChange}
+								handleStartYearChange={this.handleStartYearChange}
+								handleEndYearChange={this.handleEndYearChange}
+								handleFormSubmit={this.handleFormSubmit}
+								getAllArticles={this.getAllArticles}
+							/>
+
 		);
 	}
 }
