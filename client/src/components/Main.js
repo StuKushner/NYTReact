@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import Jumbotron from "./components/Jumbotron";
 import { Container, Row, Col } from "./components/Grid";
-import Saved from "./SavedForm";
-import Results from "./ResultsForm";
-import Search from "./SearchForm";
+import Saved from "./Saved";
+import Results from "./Results";
+import Search from "./Search";
 import API from "../utils/api";
 
 class Main extends Component {
