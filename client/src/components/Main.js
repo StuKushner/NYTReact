@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import Jumbotron from "./components/Jumbotron";
-import { Container, Row, Col } from "./components/Grid";
 import Saved from "./Saved";
 import Results from "./Results";
 import Search from "./Search";
@@ -55,7 +53,7 @@ class Main extends Component {
 	// Method that gets all of the saved articles
 	getSavedArticles = () => {
 		return this.state.saved.map(save => (
-			<Save
+			<Saved
 				_id={save._id}
 				key={save._id}
 				title={save.title}
@@ -67,17 +65,14 @@ class Main extends Component {
 		));
 	}
 
-	// Keeps track of what the user put in the topic field
 	handleTopicChange = event => {
 		this.setState({ topic: event.target.value });
 	} 
 
-	// Keeps track of what the user put in the startYear field
 	handleStartYearChange = event => {
 		this.setState({ startYear: event.target.value });
 	}
 
-	// Keeps track of what the user put in the endYear field
 	handleEndYearChange = event => {
 		this.setState({ topic: event.target.value });
 	}
@@ -106,41 +101,56 @@ class Main extends Component {
 	// How the main page will be displayed
 	render() {
 		return (
-			<div>
-				<Container>
-				// Jumbotron
-				<Jumbotron />
-				// Search form and Results Form
-				<Search
-					handleTopicChange={this.handleTopicChange}
-					handleStartYearChange={this.handleStartYearChange}
-					handleEndYearChange={this.handleEndYearChange}
-					handleFormSubmit={this.handleFormSubmit}
-					getAllArticles={this.getAllArticles}
-				/>
-					<Row>
-						<Col size="sm-12">
+			<div className="main-container">
+				<div className="container">
+					<div className="jumbotron" style="background-color: #20315A ; color: white">
+						<h1 className="text-center">
+							<strong>
+								<i className="fa fa-newspaper-o">
+									New York Times Search
+								</i>
+							</strong>
+						</h1>
+					</div>
+					<Search
+						handleTopicChange={this.handleTopicChange}
+						handleStartYearChange={this.handleStartYearChange}
+						handleEndYearChange={this.handleEndYearChange}
+						handleFormSubmit={this.handleFormSubmit}
+						getAllArticles={this.getAllArticles}
+					/>
+					<div className="row">
+						<div className="col-sm-12">
 							<br>
 							<div className="panel panel-primary">
-								<div className="panel panel-heading">
+								<div className="panel-heading">
 									<h3 className="panel-title">
 										<strong>
 											<i className="fa fa-list-alt">
-												Saved Articles
+											Saved Articles
 											</i>
 										</strong>
 									</h3>
 								</div>
 								<div className="panel-body">
 									<ul className="list-group">
-										{this.getSavedArticles}
+										{this.getSavedArticles()}
 									</ul>
 								</div>
 							</div>
-						</Col>
-					</Row>
-				</Container>
-				<Footer />	
+						</div>
+					</div>
+					<div className="row">
+						<div className="col-sm-12">
+							<hr>
+							<h5 className="text-center">
+								<small>
+									&Copy; Copyright 2018 Stuart Kushner
+								</small>
+							</h5>
+						</div>
+					</div>
+				</div>
 			</div>
 		);
 	}

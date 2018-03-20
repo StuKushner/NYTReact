@@ -2,11 +2,15 @@ import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import "./App.css";
 import Main from "./components/Main";
+import Jumbotron from "./components/Jumbotron";
+import Container from "./components/Grid";
 
 const App = () =>
+	<Container>
+	<Jumbotron />
 	<Router>
 		<div>
-			<Route path="/" component={Main} />
+			<Route exact path="/" component={Main} />
 		</div>
 	</Router>;
 
