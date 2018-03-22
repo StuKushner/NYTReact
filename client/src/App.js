@@ -1,14 +1,24 @@
 import React from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
-import Main from "./components/Main";
+import Nav from "./components/Nav";
+import Jumbotron from "./components/Jumbotron";
+import Home from "./components/Home";
+import Saved from "./components/Saved";
 
-const App = () =>
+const App = () => (
 	<Router>
 		<div>
-			<Route path="/" component={Main} />
+			<Nav />
+			<Jumbotron />
+			<Switch>
+				<Route exact path="/" component={Home} />
+				<Route exact path="/saved" component={Saved} />
+			</Switch>
 		</div>
-	</Router>;
+	</Router>
+);
+	
 
 export default App;
 
