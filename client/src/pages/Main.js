@@ -44,13 +44,12 @@ class Main extends Component {
 				title={article.headline.main}
 				date={article.pub_date}
 				url={article.web_url}
-				handleSaveButton={this.handleSaveButton}
+				saveArticle={this.saveArticle}
 				loadSavedArticles={this.loadSavedArticles}
 			/>
 		));
 	}
 
-	// Method that gets all of the saved articles
 	getSavedArticles = () => {
 		return this.state.saved.map(save => (
 			<Saved
@@ -78,7 +77,7 @@ class Main extends Component {
 	}
 
 	// What happens when the user submits the form
-	handleFormSubmit = event => {
+	handleFormSubmit = (event) => {
 		event.preventDefault();
 		API.searchNYT(this.state.topic, this.state.startYear, this.state.endYear)
 		.then(res => this.setState({ articles: res.data.response.docs }))
@@ -87,7 +86,7 @@ class Main extends Component {
 
 	// What happens when the user saves an article
 
-	saveArticle = id => {
+	saveArticle = (id) => {
 		const findArticleByID = this.state.articles.find((article) => article._id === id);
 		const saveNewArticle = {
 			title: findArticleByID.headline.main,
@@ -103,7 +102,7 @@ class Main extends Component {
 		return (
 			<div className="main-container">
 				<div className="container">
-					<div className="jumbotron" style="background-color: #20315A ; color: white">
+					<div className="jumbotron">
 						<h1 className="text-center">
 							<strong>
 								<i className="fa fa-newspaper-o">
@@ -121,7 +120,6 @@ class Main extends Component {
 					/>
 					<div className="row">
 						<div className="col-sm-12">
-							<br>
 							<div className="panel panel-primary">
 								<div className="panel-heading">
 									<h3 className="panel-title">
@@ -140,9 +138,9 @@ class Main extends Component {
 							</div>
 						</div>
 					</div>
+					<br/>
 					<div className="row">
 						<div className="col-sm-12">
-							<hr>
 							<h5 className="text-center">
 								<small>
 									&Copy; Copyright 2018 Stuart Kushner

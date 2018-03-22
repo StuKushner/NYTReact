@@ -12,7 +12,6 @@ app.use(bodyParser.json());
 // Serve up static assets (usually on heroku)
 app.use(express.static("client/build"));
 
-
 app.use(routes);
 
 // Set up promises with mongoose
@@ -21,16 +20,9 @@ mongoose.Promise = global.Promise;
 mongoose.connect(
 	process.env.MONGODB_URI || "mongodb://localhost/nytreact",
 	{
-		useMongoClient: true
+		//useMongoClient: true
 	}
 );
-
-// Send every request to the React app
-// Define any API routes before this runs
-app.get("*", function(req, res) {
-	const index = path.join(__dirname, "build", "index.html")
-  	res.sendFile(index);
-});
 
 app.listen(PORT, function() {
   console.log(`🌎 ==> Server now on port ${PORT}!`);

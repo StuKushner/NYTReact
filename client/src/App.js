@@ -6,7 +6,7 @@ import Main from "./components/Main";
 const App = () =>
 	<Router>
 		<div>
-			<Route exact path="/" component={Main} />
+			<Route path="/" component={Main} />
 		</div>
 	</Router>;
 

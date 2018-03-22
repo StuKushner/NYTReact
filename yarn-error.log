@@ -22,7 +22,7 @@ npm manifest:
     "scripts": {
       "server": "node server.js",
       "client": "cd client && npm run start",
-      "start": "./node_modules/.bin/concurrently \"./node_modules/.bin/nodemon\" \"npm run client\"",
+      "start": "concurrently \"nodemon server.js\" \"npm run client\"",
       "build": "cd client && npm run build",
       "deploy": "yarn build && git add . && git commit -m \"Building for production\" && git push heroku master",
       "test": "echo \"Error: no test specified\" && exit 1"
@@ -1620,7 +1620,7 @@ Trace:
   Error: Command failed.
   Exit code: 127
   Command: sh
-  Arguments: -c ./node_modules/.bin/concurrently "./node_modules/.bin/nodemon" "npm run client"
+  Arguments: -c concurrently "nodemon server.js" "npm run client"
   Directory: /Users/stuartkushner/Downloads/NYTReact/nytreact
   Output:
   
