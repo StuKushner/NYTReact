@@ -1,4 +1,4 @@
-import react from "react";
+import React from "react";
 
 const SaveBtn = props => (
 	<button className="btn btn-success" {...props}>

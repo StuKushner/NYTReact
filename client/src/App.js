@@ -3,8 +3,8 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
 import Nav from "./components/Nav";
 import Jumbotron from "./components/Jumbotron";
-import Home from "./components/Home";
-import Saved from "./components/Saved";
+import Home from "./pages/Home";
+import Saved from "./pages/Saved";
 
 const App = () => (
 	<Router>

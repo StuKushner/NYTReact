@@ -1,12 +1,9 @@
 import React, { Component } from "react";
-import DeleteBtn from "../../components/DeleteBtn";
-import Jumbotron from "../../components/Jumbotron";
-import API from "../../utils/api";
-import { Link } from "react-router-dom";
+import api from "../../utils/API.js";
 import { Col, Row, Container } from "../../components/Grid";
 import { List, ListItem } from "../../components/List";
-import { Input, FormBtn } from "../../components/Form";
 import SaveBtn from "../../components/SaveBtn";
+import { Input, FormBtn } from "../../components/Form";
 
 class Home extends Component {
 	state = {
@@ -16,22 +13,21 @@ class Home extends Component {
 		articles: []
 	};
 
-	searchArticles = (event) => {
+	searchArticles = event => {
 		event.preventDefault();
-		API.searchNYT(this.state.topic, this.state.startYear, this.state.endYear)
+		api.searchNYT(this.state.topic, this.state.startYear, this.state.endYear)
 		.then(res => this.setState({ articles: res.data.response.docs, topic: "", startYear: "", endYear: "" }))
 		.catch(err => console.log(err));
-		}
 	};
 
 	saveArticle = (title, date, url) => {
 		if (title && date && url) {
-			API.saveArticles({
+			api.saveArticles({
 			title: title,
 			date: date,
 			url: url
 		})
-			.then(res => console.log("Articles Saved!"));
+			.then(res => console.log("Articles Saved!"))
 			.catch(err => console.log(err));
 		}
 	};
@@ -49,7 +45,7 @@ class Home extends Component {
   				<Row>
   					<Col size="md-12">
   						<div className="panel panel-primary">
-  							<div className="panel panel-heading">
+  							<div className="panel-heading">
   								<h3 className="panel-title">Search Parameters</h3>
   							</div>
   							<div className="panel-body">
@@ -103,12 +99,13 @@ class Home extends Component {
   											article.headline.main, 
   											article.pub_date, 
   											article.web_url)} />
-  										</ListItem> ))}
+  										</ListItem>
+  									))}
   								</List>
   								</div>
   							</div>
   						) : (
-  						<h1 className="text-center">No Results Found</h1>
+  							<h1 className="text-center">No Results Found</h1>
   						)
   					}
   					</Col>
