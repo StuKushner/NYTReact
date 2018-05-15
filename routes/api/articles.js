@@ -1,13 +1,17 @@
 const router = require("express").Router();
 const articleController = require("../../controllers/articleController");
 
-// Matches with the API articles
+// Matches with "/api/articles"
 router.route("/")
-	.get(articleController.findAll)
-	.post(articleController.create);
+  .get(articleController.findAll)
+  .post(articleController.create);
 
-// Matches with "api/route/:id"
-router.route("/:id")
-	.delete(articleController.remove);
+// Matches with "/api/articles/:id"
+router
+  .route("/:id")
+  .get(articleController.findById)
+  .put(articleController.update)
+  .delete(articleController.remove);
 
 module.exports = router;
+
