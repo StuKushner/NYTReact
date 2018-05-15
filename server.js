@@ -22,7 +22,7 @@ mongoose.Promise = global.Promise;
 mongoose.connect(
   process.env.MONGODB_URI || "mongodb://localhost/nytarticles",
   {
-    useMongoClient: true
+    //useMongoClient: true
   }
 );
 
