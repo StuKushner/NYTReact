@@ -1,2 +1,1 @@
-export * from "./FormBtn";
-export * from "./Input";
+export { default } from "./Form";

@@ -1,4 +1,7 @@
-.jumbotron {
-	min-height: 300px;
-	padding-top: 75px;
+.jumbotron h1 {
+  font-size: 32px;
+}
+
+.jumbotron h2 {
+  font-size: 26px;
 }

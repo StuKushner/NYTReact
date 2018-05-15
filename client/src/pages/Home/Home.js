@@ -1,119 +1,111 @@
 import React, { Component } from "react";
-import api from "../../utils/API.js";
+import Jumbotron from "../../components/Jumbotron";
+import Panel from "../../components/Panel";
+import Form from "../../components/Form";
+import Article from "../../components/Article";
+import Footer from "../../components/Footer";
+import API from "../../utils/API";
 import { Col, Row, Container } from "../../components/Grid";
-import { List, ListItem } from "../../components/List";
-import SaveBtn from "../../components/SaveBtn";
-import { Input, FormBtn } from "../../components/Form";
+import { List } from "../../components/List";
 
 class Home extends Component {
-	state = {
-		topic: "",
-		startYear: "",
-		endYear: "",
-		articles: []
-	};
+  state = {
+    articles: [],
+    q: "",
+    start_year: "",
+    end_year: "",
+    message: "Search For Articles To Begin!"
+  };
 
-	searchArticles = event => {
-		event.preventDefault();
-		api.searchNYT(this.state.topic, this.state.startYear, this.state.endYear)
-		.then(res => this.setState({ articles: res.data.response.docs, topic: "", startYear: "", endYear: "" }))
-		.catch(err => console.log(err));
-	};
+  handleInputChange = event => {
+    const { name, value } = event.target;
+    this.setState({
+      [name]: value
+    });
+  };
 
-	saveArticle = (title, date, url) => {
-		if (title && date && url) {
-			api.saveArticles({
-			title: title,
-			date: date,
-			url: url
-		})
-			.then(res => console.log("Articles Saved!"))
-			.catch(err => console.log(err));
-		}
-	};
+  getArticles = () => {
+    API.getArticles({
+      q: this.state.q,
+      start_year: this.state.start_year,
+      end_year: this.state.end_year
+    })
+      .then(res =>
+        this.setState({
+          articles: res.data,
+          message: !res.data.length
+            ? "No New Articles Found, Try a Different Query"
+            : ""
+        })
+      )
+      .catch(err => console.log(err));
+  };
 
-	handleInputChange = event => {
-    	const { name, value } = event.target;
-    	this.setState({
-      		[name]: value
-    	});
-  	};
+  handleFormSubmit = event => {
+    event.preventDefault();
+    this.getArticles();
+  };
 
-  	render() {
-  		return (
-  			<Container fluid>
-  				<Row>
-  					<Col size="md-12">
-  						<div className="panel panel-primary">
-  							<div className="panel-heading">
-  								<h3 className="panel-title">Search Parameters</h3>
-  							</div>
-  							<div className="panel-body">
-  								<form>
-  									<Input
-  										value={this.state.topic}
-  										onChange={this.handleInputChange}
-  										name="topic"
-  										placeholder="Search Topic"
-  									/>
-  									<Input
-  										value={this.state.startYear}
-  										onChange={this.handleInputChange}
-  										name="startYear"
-  										placeholder="Search Start Year"
-  									/>
-  									<Input
-  										value={this.state.endYear}
-  										onChange={this.handleInputChange}
-  										name="startYear"
-  										placeholder="Search End Year"
-  									/>
-  									<FormBtn
-  										disabled={!(this.state.topic && this.state.startYear && this.state.endYear)}
-  										onClick={this.searchArticles}
-  									>
-  										Search
-  									</FormBtn>
-  								</form>
-  							</div>
-  						</div>
-  					</Col>
-  				</Row>
-  				<Row>
-  					<Col size="md-12">
-  						{this.state.articles.length ? (
-  							<div className="panel panel-primary">
-  								<div className="panel panel-heading">
-  									<h3 className="panel-title">Search Results</h3>
-  								</div>
-  								<div className="panel-body">
-  								<List>
-  									{this.state.articles.map(article => (
-  										<ListItem
-  											key={article._id}
-  											title={article.headline.main}
-  											date={article.pub_date}
-  											url={article.web_url}
-  										>
-  										<SaveBtn onClick={() => this.saveArticle(
-  											article.headline.main, 
-  											article.pub_date, 
-  											article.web_url)} />
-  										</ListItem>
-  									))}
-  								</List>
-  								</div>
-  							</div>
-  						) : (
-  							<h1 className="text-center">No Results Found</h1>
-  						)
-  					}
-  					</Col>
-  				</Row>
-  			</Container>
-  		);
-  	}
+  handleArticleSave = id => {
+    const article = this.state.articles.find(article => article._id === id);
+    API.saveArticle(article).then(res => this.getArticles());
+  };
+
+  render() {
+    return (
+      <Container>
+        <Row>
+          <Col size="md-12">
+            <Jumbotron>
+              <h1 className="text-center">
+                <strong>(ReactJS) New York Times Article Scrubber</strong>
+              </h1>
+              <h2 className="text-center">
+                Search for and save articles of interest.
+              </h2>
+            </Jumbotron>
+          </Col>
+          <Col size="md-12">
+            <Panel title="Query" icon="newspaper-o">
+              <Form
+                handleInputChange={this.handleInputChange}
+                handleFormSubmit={this.handleFormSubmit}
+                q={this.state.q}
+                start_year={this.state.start_year}
+                end_year={this.state.end_year}
+              />
+            </Panel>
+          </Col>
+        </Row>
+        <Row>
+          <Col size="md-12">
+            <Panel title="Results">
+              {this.state.articles.length ? (
+                <List>
+                  {this.state.articles.map(article => (
+                    <Article
+                      key={article._id}
+                      _id={article._id}
+                      title={article.headline.main}
+                      url={article.web_url}
+                      date={article.pub_date}
+                      handleClick={this.handleArticleSave}
+                      buttonText="Save Article"
+                    />
+                  ))}
+                </List>
+              ) : (
+                <h2 className="text-center">{this.state.message}</h2>
+              )}
+            </Panel>
+          </Col>
+        </Row>
+        <Footer />
+      </Container>
+    );
+  }
 }
 
 export default Home;
+
 
